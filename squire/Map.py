@@ -133,7 +133,11 @@ def align_paired(fastq1,fastq2,pthreads,trim3,index,outfile,gtf,gzip,prefix,read
 
         STAR_output = prefix + "Aligned.out.bam"
 
-        sortcommand_list = ["samtools", "sort", "-@",str(pthreads), STAR_output, prefix]
+        # samtools version 0.1.18 sort format
+        #sortcommand_list = ["samtools", "sort", "-@",str(pthreads), STAR_output, prefix]
+        # samtools version 1.9 sort format (testing)
+        sortcommand_list = ["samtools", "sort", "-@",str(pthreads), "-o",outfile, STAR_output]
+
         sortcommand = " ".join(sortcommand_list)
         sp.check_call(["/bin/sh", "-c", sortcommand])
 
